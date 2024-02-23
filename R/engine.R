@@ -315,7 +315,7 @@ eng_Rcpp = function(options) {
 
 ## Julia
 eng_julia = function(options) {
-  JuliaCall::eng_juliacall(options)
+  JuliaKnitrEngine::eng_julia(options)
 }
 
 ## Stan

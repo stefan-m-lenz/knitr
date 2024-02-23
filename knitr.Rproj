@@ -14,6 +14,7 @@ LaTeX: pdfLaTeX
 
 AutoAppendNewline: Yes
 StripTrailingWhitespace: Yes
+LineEndingConversion: Posix
 
 BuildType: Package
 PackageInstallArgs: -v && Rscript -e "Rd2roxygen::rab(build=F,install=T)"
