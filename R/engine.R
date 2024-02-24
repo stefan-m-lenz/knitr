@@ -327,6 +327,7 @@ eng_julia = function(options) {
   code <- options$code
   result <- JuliaConnectoR::juliaEval(code)
   out <- JuliaConnectoR::juliaCall("KnitrEngine.display", result)
+  options$results <- 'asis' # prevent commenting out of output
   engine_output(options, code, out)
 }
 
