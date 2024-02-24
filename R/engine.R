@@ -314,8 +314,20 @@ eng_Rcpp = function(options) {
 }
 
 ## Julia
+juliaEngineStatus <- new.env()
 eng_julia = function(options) {
-  JuliaKnitrEngine::eng_julia(options)
+  if (is.null(juliaEngineStatus$initialized)) {
+    if (!loadable("JuliaConnectoR")) {
+      stop2("The 'JuliaConnectoR' package must be installed in order for the knitr engine 'Julia' to work.")
+    }
+    knitrEngineJuliaModule <- system.file('misc', 'KnitrEngine.jl', package = 'knitr')
+    JuliaConnectoR::juliaCall("include", knitrEngineJuliaModule)
+    juliaEngineStatus$initialized <- TRUE
+  }
+  code <- options$code
+  result <- JuliaConnectoR::juliaEval(code)
+  out <- JuliaConnectoR::juliaCall("KnitrEngine.display", result)
+  engine_output(options, code, out)
 }
 
 ## Stan
