@@ -314,7 +314,7 @@ eng_Rcpp = function(options) {
 }
 
 ## Julia
-juliaEngineStatus <- new.env()
+juliaEngineStatus <- new.env(emptyenv())
 eng_julia = function(options) {
   if (is.null(juliaEngineStatus$initialized)) {
     if (!loadable("JuliaConnectoR")) {
@@ -325,8 +325,7 @@ eng_julia = function(options) {
     juliaEngineStatus$initialized <- TRUE
   }
   code <- options$code
-  result <- JuliaConnectoR::juliaEval(code)
-  out <- JuliaConnectoR::juliaCall("KnitrEngine.display", result)
+  out <- JuliaConnectoR::juliaCall("KnitrEngine.run", code)
   options$results <- 'asis' # prevent commenting out of output
   engine_output(options, code, out)
 }
